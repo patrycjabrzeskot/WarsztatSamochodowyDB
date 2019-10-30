@@ -22,8 +22,19 @@
         <li><a href="#">Pomoc</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Rejestracja </a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logowanie </a></li>
+      <li><a><?php session_start();
+  echo ($_SESSION["username"]); ?></a></li>
+
+<?php 
+if(isset($_SESSION['username'])){
+  echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Wyloguj </a></li>';
+}else{
+  echo '<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Rejestracja </a></li>';
+  echo '<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Zaloguj </a></li>';
+}
+?>
+
+
       </ul>
     </div>
   </div>

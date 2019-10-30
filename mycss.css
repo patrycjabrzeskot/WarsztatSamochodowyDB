@@ -17,4 +17,12 @@ bottom: .5em;
   margin-left: 25%;
 }
 
+body{ font: 14px sans-serif; }
+.wrapper{ width: 350px; padding: 20px; }
+
+.form-control{
+
+  width: 400px;
+
+}
 
