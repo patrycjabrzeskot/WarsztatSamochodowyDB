@@ -12,13 +12,32 @@
 <link rel="stylesheet" href="css/jquery.tablesorter.pager.css">
 <script src="js/jquery.tablesorter.pager.js"></script>
   <link rel="stylesheet" href="./mycss.css" type="text/css">
+
+<script type="text/javascript">
+function confirmation(){
+var answer = confirm('Czy na pewno usunąć ten wpis?');
+if (answer){
+		
+		window.location = "spis.php";
+		}
+else
+{
+nope
+}
+
+}
+
+
+</script>
+
 </head>
 
 <?php
 
-if (isset($_POST['edit']))
-
-echo "edit <br>";
+if (isset($_POST['edit'])){
+echo $eid = $_POST['id'];
+header("location: spisEdit.php?id=".$eid);
+}
 
 ?>
 
@@ -33,12 +52,10 @@ define('DB_PASSWORD', '12345678');
 define('DB_NAME', 'warsztatDB');
 
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-echo $did = $_POST['id'];
+$did = $_POST['id'];
 $query = $link->prepare( "DELETE FROM carslist WHERE id=?" );
 $query->bind_param( "s", $did );
 $query->execute();
-
-
 mysqli_close($link);
 
 }
@@ -48,7 +65,7 @@ mysqli_close($link);
 <body>
   <div class="container">
   <h2>Spis pojazdów</h2>
-<br><br>
+<br>
 
 <i class="fa fa-sort"></i>
 <table id="navbar" class="table">
@@ -76,16 +93,16 @@ mysqli_close($link);
       <th  ><form action="spis.php" method="post">Imię Nazwisko <span>
  <button type="submit" class="btn btn-default"  name="sortImie" ><span class="glyphicon glyphicon-sort" aria-hidden="true"  ></span></button></span>
 </form></th>
-<th ><form action="spis.php" method="post">Numer telefonu <span>
+<th ><form action="spis.php" method="post">Nr tel <span>
  <button type="submit" class="btn btn-default"  name="sortTel" ><span class="glyphicon glyphicon-sort" aria-hidden="true"  ></span></button></span>
 </form></th>
 <th ><form action="spis.php" method="post">Model <span>
  <button type="submit" class="btn btn-default"  name="sortModel" ><span class="glyphicon glyphicon-sort" aria-hidden="true"  ></span></button></span>
 </form></th>      
-<th ><form action="spis.php" method="post">Numer rejestracyjny <span>
+<th ><form action="spis.php" method="post">Nr rej <span>
  <button type="submit" class="btn btn-default"  name="sortNumRej" ><span class="glyphicon glyphicon-sort" aria-hidden="true"  ></span></button></span>
 </form></th>      
-<th ><form action="spis.php" method="post">Data dodania <span>
+<th ><form action="spis.php" method="post">Data  <span>
  <button type="submit" class="btn btn-default"  name="sortData" ><span class="glyphicon glyphicon-sort" aria-hidden="true"  ></span></button></span>
 </form>
 <th ><form action="spis.php" method="post">Zdjęcie</form></th>
@@ -101,12 +118,12 @@ define('DB_PASSWORD', '12345678');
 define('DB_NAME', 'warsztatDB');
  
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-$sql = "SELECT * FROM carslist";
+$sql = "SELECT * FROM carslist ORDER BY id";
 $result = $link->query($sql);
 
 if (isset($_POST['sortImie'])){
-$sql = "SELECT * FROM carslist ORDER BY clientname";
-$result = $link->query($sql);
+  $sql = "SELECT * FROM carslist ORDER BY clientname";
+  $result = $link->query($sql);
 }
 if (isset($_POST['sortID'])){
   $sql = "SELECT * FROM carslist ORDER BY id";
@@ -131,13 +148,16 @@ if (isset($_POST['sortData'])){
 
 if($result) {
   while($row = $result->fetch_assoc()) {
+    $tmp = $row["created_at"];
+    $rest = substr($tmp, 0, -9); 
+
       echo "<tr>
-      <th scope='row'>". $row["id"]."</th><td>" . $row["clientname"].  "</td><td>" . $row["phonenumber"]. "</td><td>" . $row["model"]. "</td><td>" . $row["carnumber"]. "</td><td>" . $row["created_at"]. "</td><td><span class='glyphicon glyphicon-picture' aria-hidden='true'></td>
-      <td> <form action='spis.php' method='post'>
-      <span> <button type='submit' class='btn btn-succes'  name='edit' id = ". $row["id"]." value=". $row['id']. "><span class='glyphicon glyphicon-pencil' aria-hidden='true'  ></span></button></span><br>
+      <th scope='row'>". $row["id"]."</th><td>" . $row["clientname"].  "</td><td>" . $row["phonenumber"]. "</td><td>" . $row["model"]. "</td><td>" . $row["carnumber"]. "</td><td>" . $rest. "</td><td><img style='width: 170px; height: 120px;' src=". $row["picture"]."></td>
+      <td><form action='spis.php' method='post'>
+      <span><input type=hidden name=id value=".$row["id"]." > <button type='submit' class='btn btn-succes'  name='edit'  id = ". $row["id"]." value=". $row['id']. "><span class='glyphicon glyphicon-pencil' aria-hidden='true'  ></span></button></span>
       </form></td>
       <td><form action='spis.php' method='post'>
-      <span><input type=hidden name=id value=".$row["id"]." > <button type='submit' class='btn btn-succes'  name='delete'  id = ". $row["id"]." value=". $row['id']. "><span class='glyphicon glyphicon-trash' aria-hidden='true'  ></span></button></span><br>
+      <span><input type=hidden name=id value=".$row["id"]." > <button type='submit' class='btn btn-succes'  name='delete'  id = ". $row["id"]." value=". $row['id']. " onClick='confirmation();' ><span class='glyphicon glyphicon-trash' aria-hidden='true'  ></span></button></span>
       </form></td>
     </tr>";
   }

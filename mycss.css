@@ -14,7 +14,8 @@ bottom: .5em;
 .auto{
   height: 300px ;
   width: 400px ;
-  margin-left: 25%;
+text-align: center;
+margin-right: 100px;
 }
 
 body{ font: 14px sans-serif; }
@@ -23,6 +24,12 @@ body{ font: 14px sans-serif; }
 .form-control{
 
   width: 400px;
+
+}
+
+btn-default{
+
+  width: 150px;
 
 }
 

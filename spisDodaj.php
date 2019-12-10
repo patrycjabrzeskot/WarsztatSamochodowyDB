@@ -15,8 +15,24 @@
 </head>
 <body>
 
-
 <?php
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '12345678');
+define('DB_NAME', 'warsztatDB');
+ 
+$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+$sql = "SELECT * FROM carslist";
+$result = $link->query($sql);
+
+if($result) {
+
+  while($row = $result->fetch_assoc()) {
+    $maxIndex = $row["id"];
+  }
+    $nextID = $maxIndex+1;
+  }
+
 
 if (isset($_POST['cancel']))
 {
@@ -37,10 +53,11 @@ $name = $_POST['name'];
 $phonenumber = $_POST['phonenumber'];
 $model = $_POST['model'];
 $carnumber = $_POST['carnumber'];
-$picture = $_POST['picture'];
 $date = $_POST['date'];
+$photo = $_POST['photo'];
 
-$sql = "INSERT INTO carslist VALUES ('$id', '$name', '$phonenumber','$model', '$carnumber', '$picture', '$date')";
+
+$sql = "INSERT INTO carslist VALUES ('$nextID', '$name', '$phonenumber','$model', '$carnumber', '\\\\..\\\\photos\\\\$photo' , '$date')";
 
 if(mysqli_query($link, $sql)){
     echo "Records added successfully.";
@@ -49,7 +66,6 @@ if(mysqli_query($link, $sql)){
 }
  
 mysqli_close($link);
-
 
    myfnc();
 }
@@ -63,8 +79,8 @@ function myfnc()
 ?>
 
   <div class="container">
-  <h2>Spis pojazdów</h2>
-<br><br>
+  <h2>Dodaj pojazd do bazy</h2>
+
 
 <i class="fa fa-sort"></i>
 <br>
@@ -83,14 +99,14 @@ function myfnc()
   </thead>
 <tbody>
 <tr>
-<form action="spisDodaj.php" method="post" style="width: 0px;">
-<td scope="col" > <input type="text" name="id" id="id" style="width: 30px;"></td>
+<form action="spisDodaj.php" method="post">
+<th scope="col" > <?php echo $nextID; ?> </th>
 <td scope="col" class="th-sm" ><input type="text" name="name" id="name" style="width: 150px;" ></td>
 <td scope="col" class="th-sm"> <input type="text" name="phonenumber" id="phonenumber" style="width: 150px;"></td>
 <td scope="col" class="th-sm"><input type="text" name="model" id="model" style="width: 150px;"></td>
 <td scope="col" class="th-sm"><input type="text" name="carnumber" id="carnumber" style="width: 150px;"></td>
 <td scope="col" class="th-sm"><input type="text" name="date" id="date" style="width: 150px;" value= "<?php echo date('Y-m-d'); ?>"></td>
-<td scope="col" class="th-sm"><input type="text" name="picture" id="picture" style="width: 50px;"></td>
+<td>  <input type="file" id= photo name="photo"/><br/></td>
 <td scope="col" class="th-sm"><span><button type="submit" class="btn btn-succes"  name="ok" data-toggle="tooltip" data-placement="top" title="Dodaj" ><span class="glyphicon glyphicon-ok" aria-hidden="true"  ></span></button></span> </td>
 <td scope="col" class="th-sm"><button type="submit" class="btn btn-succes"  name="cancel" data-toggle="tooltip" data-placement="top" title="Anuluj" ><span class="glyphicon glyphicon-remove" aria-hidden="true"  ></span></button> </td>
 </form>
@@ -110,11 +126,14 @@ if($result) {
 
 
   while($row = $result->fetch_assoc()) {
+    $tmp = $row["created_at"];
+    $rest = substr($tmp, 0, -9); 
     echo "<tr>
-    <th scope='row'>". $row["id"]."</th><td>" . $row["clientname"].  "</td><td>" . $row["phonenumber"]. "</td><td>" . $row["model"]. "</td><td>" . $row["carnumber"]. "</td><td>" . $row["created_at"]. "</td><td><span class='glyphicon glyphicon-picture' aria-hidden='true'></td>
+    <th scope='row'>". $row["id"]."</th><td>" . $row["clientname"].  "</td><td>" . $row["phonenumber"]. "</td><td>" . $row["model"]. "</td><td>" . $row["carnumber"]. "</td><td>" . $rest . "</td><td><img style='width: 130px; height: 75px;' src=". $row["picture"]."></td>
   <td></td><td></td>
     </tr>";
   }
+
   }
  else {
   echo "0 results";

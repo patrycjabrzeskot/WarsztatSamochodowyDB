@@ -18,8 +18,9 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li ><a href="spis.php">Spis pojazdów</a></li>
-        <li><a href="historia.php">Historia napraw</a></li>
-        <li><a href="#">Pomoc</a></li>
+        <li><a href="historia.php">Cennik</a></li>
+        <li><a href="welcome.php">Twoje konto</a></li>
+        <li><a href="pomoc.php">Kontakt</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       <li><a><?php session_start();
