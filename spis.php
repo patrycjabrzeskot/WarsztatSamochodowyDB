@@ -1,7 +1,16 @@
+<!DOCTYPE html>
+<html>
+
 <?php
    include("navbar.php");
 ?>
-   
+<?php
+ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: error.php");
+    exit;
+}  
+?>
+
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -12,55 +21,31 @@
 <link rel="stylesheet" href="css/jquery.tablesorter.pager.css">
 <script src="js/jquery.tablesorter.pager.js"></script>
   <link rel="stylesheet" href="./mycss.css" type="text/css">
-
+<!-- 
 <script type="text/javascript">
 function confirmation(){
 var answer = confirm('Czy na pewno usunąć ten wpis?');
 if (answer){
-		
-		window.location = "spis.php";
+
 		}
 else
 {
-nope
-}
 
 }
-
-
-</script>
+}
+</script> -->
 
 </head>
 
 <?php
-
 if (isset($_POST['edit'])){
-echo $eid = $_POST['id'];
+$eid = $_POST['id'];
 header("location: spisEdit.php?id=".$eid);
 }
-
 ?>
 
 
-<?php
 
-if (isset($_POST['delete']))
-{
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '12345678');
-define('DB_NAME', 'warsztatDB');
-
-$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-$did = $_POST['id'];
-$query = $link->prepare( "DELETE FROM carslist WHERE id=?" );
-$query->bind_param( "s", $did );
-$query->execute();
-mysqli_close($link);
-
-}
-
-?>
 
 <body>
   <div class="container">
@@ -151,13 +136,13 @@ if($result) {
     $tmp = $row["created_at"];
     $rest = substr($tmp, 0, -9); 
 
-      echo "<tr>
+      echo "<tr id=". $row["id"]." >
       <th scope='row'>". $row["id"]."</th><td>" . $row["clientname"].  "</td><td>" . $row["phonenumber"]. "</td><td>" . $row["model"]. "</td><td>" . $row["carnumber"]. "</td><td>" . $rest. "</td><td><img style='width: 170px; height: 120px;' src=". $row["picture"]."></td>
       <td><form action='spis.php' method='post'>
       <span><input type=hidden name=id value=".$row["id"]." > <button type='submit' class='btn btn-succes'  name='edit'  id = ". $row["id"]." value=". $row['id']. "><span class='glyphicon glyphicon-pencil' aria-hidden='true'  ></span></button></span>
       </form></td>
       <td><form action='spis.php' method='post'>
-      <span><input type=hidden name=id value=".$row["id"]." > <button type='submit' class='btn btn-succes'  name='delete'  id = ". $row["id"]." value=". $row['id']. " onClick='confirmation();' ><span class='glyphicon glyphicon-trash' aria-hidden='true'  ></span></button></span>
+      <span><input type=hidden name=id value=".$row["id"]." > <button type='submit' class='btn btn-succes remove'  name='delete'  id = ". $row["id"]." value=". $row['id']. " onClick='confirmation();' ><span class='glyphicon glyphicon-trash' aria-hidden='true'  ></span></button></span>
       </form></td>
     </tr>";
   }
@@ -186,3 +171,33 @@ if($result) {
 </div>
 
 </body>
+
+
+
+
+
+<script type="text/javascript">
+    $(".remove").click(function(){
+        var id =  $(this).parents("tr").attr("id");
+
+        if(confirm('Czy na pewno chcesz trwale usunąć ten wiersz ?'))
+        {
+               $.ajax({
+               url: '/../delete.php',
+               type: 'GET',
+               data: {id: id},
+               error: function() {
+                  alert('Coś poszło nie tak');
+               },
+               success: function(data) {
+                    $("#"+id).remove();
+                    alert("Wiersz został usunięty");  
+               }
+            });
+        }
+    });
+
+
+</script>
+
+</html>

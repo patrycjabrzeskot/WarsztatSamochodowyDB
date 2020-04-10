@@ -1,7 +1,12 @@
 <?php
    include("navbar.php");
 ?>
-
+<?php
+ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: error.php");
+    exit;
+}  
+?>
 <?php
 // Include config file
 require_once "config.php";

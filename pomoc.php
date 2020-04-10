@@ -8,9 +8,10 @@
 
   <!-- <link rel="stylesheet" href="./mycss.css" type="text/css"> -->
   <div class="container">
-  <h1>Kontakt</h1><br>
-  <h4>W razie wystąpienia problemów technicznych, usterek lub gdy chcesz nam powiedzieć coś miłego - napisz do nas maila! <br><br><a href="mailto:warsztat@google.com">warsztat@google.com</a> <h4><br>
-  <br>
+  <h1>Pomoc</h1><br>
+  <h4>W razie wystąpienia problemów technicznych, usterek napisz maila!  <a href="mailto:patrycja.brzeskot97@gmail.com">patrycja.brzeskot97@gmail.com</a><br> <h4><br>
+  <h4>Lub zadzwoń 531 379 300 <h4><br>
+
   <img src="..\\photos2\\mail.jpg"  style=" height: 300px;">
 
   

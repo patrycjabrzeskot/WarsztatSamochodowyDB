@@ -4,6 +4,12 @@
 
 
 ?>
+   <?php
+ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: error.php");
+    exit;
+}  
+?>
    
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">

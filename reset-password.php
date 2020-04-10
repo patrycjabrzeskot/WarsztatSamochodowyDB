@@ -84,8 +84,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
 <div class="container">
-        <h2>Reset Password</h2>
-        <p>Wypełnij by zresetować hasło.</p>
+        <h2>Zmiana hasła</h2>
+        <p>Wypełnij by zmienić hasło.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
             <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                 <label>Nowe hasło</label>

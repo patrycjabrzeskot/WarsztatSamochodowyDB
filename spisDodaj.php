@@ -2,6 +2,12 @@
    include("navbar.php");
    ?>
    
+   <?php
+ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: error.php");
+    exit;
+}  
+?>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

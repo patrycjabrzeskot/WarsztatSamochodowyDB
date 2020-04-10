@@ -33,10 +33,13 @@
             <form action="spis.php" method="post">
 
                <img src="..\\photos2\\logo.jpg" style=" height: 150px;">
-
-<span> <button type="submit" class="btn btn-default btn-lg btn-block"  name="submit" ><span class="glyphicon glyphicon-list-alt" aria-hidden="true"  ></span>  Spis pojazdów</button></span>
+               <?php  session_start();
+if(isset($_SESSION['username'])){
+echo ' <span> <button type="submit" class="btn btn-default btn-lg btn-block"  name="submit" ><span class="glyphicon glyphicon-list-alt" aria-hidden="true"  ></span>  Spis pojazdów</button></span>
+'; }
+?>
 </form><br>
-<form action="historia.php" method="post">
+<form action="cennik.php" method="post">
 <span> <button type="submit" class="btn btn-default btn-lg btn-block"  name="submit" ><span class="glyphicon glyphicon-usd" aria-hidden="true"  ></span>  Cennik </button></span>
 </form><br>
 <form action="welcome.php" method="post">
@@ -44,7 +47,7 @@
 </form><br>
 
 <form action="pomoc.php" method="post">
-<span> <button type="submit" class="btn btn-default btn-lg btn-block"  name="submit" ><span class="glyphicon glyphicon-question-sign" aria-hidden="true"  ></span>  Kontakt </button></span>
+<span> <button type="submit" class="btn btn-default btn-lg btn-block"  name="submit" ><span class="glyphicon glyphicon-question-sign" aria-hidden="true"  ></span>  Pomoc </button></span>
 </form><br>
 
                <p><a href="#"> </a></p>
@@ -88,14 +91,13 @@
             <div class="col-sm-3 sidenav"><br>
                <h3 style="text-align:center;">Pełen zakres usług motoryzacyjnych</h3><br>
                <img src="..\\photos2\\gear.jpg"  style="height: 50px;">
-           <h4> Okresowe badania</h4>
-           <h4> Mechanika</h4>
-           <h4> Wymiana opon</h4>
-           <h4> Geometria laserowa</h4>
-           <h4> Diagnostyka</h4>
-           <h4> Klimatyzacja</h4>
-           <h4> Elektronika</h4>
-           <h4> Blacharnia i lakiernia</h4>
+           <h4> Mechanika pojazdowa</h4>
+           <h4> Przeglądy kontrolne</h4>
+           <h4> Wymiana opon i felg</h4>
+           <h4> Serwis klimatyzacji</h4>
+           <h4> Elektryka samochodowa</h4>
+           <h4> Elektronika samochodowa</h4>
+           <h4> Regeneracja części samochodowych</h4>
            <img src="..\\photos2\\gear.jpg"  style="height: 50px;">
 
             </div>
